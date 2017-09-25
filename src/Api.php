@@ -507,4 +507,29 @@ class Api
             'currency' => $currency
         ]);
     }
+
+    /**
+     * To send a message to an arbitrary phone
+     *
+     * @param $sender
+     * @param $text
+     * @param $phone
+     * @param null $datetime
+     * @param null $smsLifetime
+     * @param null $type
+     * @param null $aSender
+     * @return mixed
+     */
+    function sendSMS($sender, $text, $phone, $datetime = null, $smsLifetime = null, $type = null, $aSender = null)
+    {
+        return $this->call('sendSMS', [
+            'sender' => $sender,
+            'text' => $text,
+            'phone' => $phone,
+            'datetime' => $datetime,
+            'sms_lifetime' => $smsLifetime,
+            'type' => $type,
+            'asender' => $aSender,
+        ]);
+    }
 }
