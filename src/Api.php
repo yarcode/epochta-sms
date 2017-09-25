@@ -177,8 +177,8 @@ class Api
     /**
      * Search addressbook
      *
-     * Availible fields: name,phones,date.
-     * Availible operations: like,=,>,>=,<,<=.
+     * Available fields: name,phones,date.
+     * Available operations: like,=,>,>=,<,<=.
      * Example for searchFields: $searchFields['name']=array('operation'=>'like', 'value'=>"test%");
      *
      * @param $fields
@@ -349,6 +349,162 @@ class Api
     {
         return $this->call('delPhoneFromAddressBook', [
             'idAddressBook' => $idAddressBook
+        ]);
+    }
+
+    /**
+     * To delete a group of phone numbers from your addressbook
+     *
+     * @param $idPhones
+     * @return mixed
+     */
+    public function delPhoneFromAddressBookGroup($idPhones)
+    {
+        return $this->call('delphonefromaddressbookgroup', [
+            'idPhones' => $idPhones
+        ]);
+    }
+
+    /**
+     * Edit phone addressbook by phone ID
+     *
+     * @param $idPhone
+     * @param $phone
+     * @param $variables
+     * @return mixed
+     */
+    function editPhone($idPhone, $phone, $variables)
+    {
+        return $this->call('editPhone', [
+            'idPhone' => $idPhone,
+            'phone' => $phone,
+            'variables' => $variables
+        ]);
+    }
+
+    /**
+     * Search phones
+     * Available fields: idAddressBook,phones,normalPhone, variables, status.
+     * Available operations: like,=,>,>=,<,<=.
+     * Example for searchFields:
+     * $searchFields['normalPhone']=array('operation'=>'like', 'value'=>"test%");
+     *
+     * @param $searchFields
+     * @param null $from
+     * @param null $offset
+     * @return mixed
+     */
+    function searchPhones($searchFields, $from = null, $offset = null)
+    {
+        return $this->call('searchPhones', [
+            'searchFields' => json_encode($searchFields),
+            'from' => $from,
+            'offset' => $offset
+        ]);
+    }
+
+    /**
+     * Add phone to exceptions
+     *
+     * @param null $idPhone
+     * @param null $phone
+     * @param $reason
+     * @return mixed
+     */
+    function addPhoneToExceptions($idPhone = null, $phone = null, $reason)
+    {
+        return $this->call('addPhoneToExceptions', [
+            'isPhone' => $idPhone,
+            'phone' => $phone,
+            'reason' => $reason
+        ]);
+    }
+
+
+    /**
+     * Delete the phone from exceptions
+     *
+     * @param null $idPhone
+     * @param null $phone
+     * @param null $idException
+     * @return mixed
+     */
+    function delPhoneFromExceptions($idPhone = null, $phone = null, $idException = null)
+    {
+        return $this->call('delPhoneFromExceptions', [
+            'isPhone' => $idPhone,
+            'phone' => $phone,
+            'idException' => $idException
+        ]);
+    }
+
+    /**
+     * To edit the phone in the exceptions
+     *
+     * @param $idException
+     * @param $reason
+     * @return mixed
+     */
+    function editPhoneFromExceptions($idException, $reason)
+    {
+        return $this->call('editExceptions', [
+            'idException' => $idException,
+            'reason' => $reason
+        ]);
+    }
+
+    /**
+     * Get exception
+     *
+     * @param null $idException
+     * @param null $phone
+     * @param null $idAddressBook
+     * @param null $from
+     * @param null $offset
+     * @return mixed
+     */
+    function getException($idException = null, $phone = null, $idAddressBook = null, $from = null, $offset = null)
+    {
+        return $this->call('getException', [
+            'idException' => $idException,
+            'phone' => $phone,
+            'idAddresbook' => $idAddressBook, // TODO: check param name
+            'from' => $from,
+            'offset' => $offset,
+        ]);
+    }
+
+    /**
+     * Search exceptions
+     *
+     * Available fields: id, phone, date, descr.
+     * Available operations: like,=,>,>=,<,<=.
+     * Example for searchFields: $searchFields['name']=array('operation'=>'like', 'value'=>"test%");
+     *
+     * @param $fields
+     * @param $from
+     * @param $offset
+     * @return mixed
+     */
+    public function searchPhonesInExceptions($fields = null, $from = null, $offset = null)
+    {
+        return $this->call('searchPhonesInExceptions', [
+            'searchFields' => $fields,
+            'from' => $from,
+            'offset' => $offset,
+        ]);
+    }
+
+    /**
+     * Get user balance
+     *
+     * @param null $currency
+     * @return mixed
+     */
+    function getUserBalance($currency = null)
+    {
+        return $this->call('getUserBalance', [
+            'currency' => $currency
         ]);
     }
 }
