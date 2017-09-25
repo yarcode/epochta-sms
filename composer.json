@@ -1,0 +1,29 @@
+{
+  "name": "yarcode/epochtasms",
+  "description": "PHP class for working with epochtasms.ru api by YarCode Team",
+  "type": "library",
+  "keywords": [
+    "epochtasms.ru",
+    "sms",
+    "api",
+    "russian"
+  ],
+  "homepage": "https://github.com/yarcode/epochtasms",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yan Kuznetsov",
+      "email": "info@yanman.ru",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "guzzlehttp/guzzle": "^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "YarCode\\EpochtaSMS\\": "./src"
+    }
+  }
+}
