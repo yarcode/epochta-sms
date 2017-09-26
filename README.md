@@ -26,6 +26,14 @@ Sending text message:
 
     $api->sendSMS('Sender', 'Text message', '79112223344');
     
+Sending messages to a group of recipients:
+    
+    $api->sendSMSGroup('Sender', 'Text message', ['79005552525', '78885552233'], '2017-01-19 00:00:00', 0);
+    
+Balance:
+
+    $api->getUserBalance();
+    
 ## Licence ##
     
 MIT
