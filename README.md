@@ -1,6 +1,6 @@
 # YarCode\EpochtaSMS\Api
 
-PHP class for working with [epochtasms.ru](http://epochtasms.ru) API by [YarCode Team](http://yarcode.com).
+PHP class for working with [epochtasms.ru](https://www.epochtasms.ru/api/v3.php) API by [YarCode Team](http://yarcode.com).
 
 ## Installation ##
 
