@@ -553,7 +553,7 @@ class Api
         return $this->call('sendsmsgroup', [
             'sender' => $sender,
             'text' => $text,
-            'phones' => $phones,
+            'phones' => json_encode($phones),
             'datetime' => $datetime,
             'sms_lifetime' => $smsLifetime,
             'type' => $type,
