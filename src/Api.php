@@ -15,7 +15,10 @@ class Api
 {
     const API_URL = 'http://api.atompark.com/api/sms/3.0';
 
+    /** @var string */
     public $version = '3.0';
+
+    /** @var bool */
     public $sandbox = false;
 
     /** @var Client */
@@ -48,7 +51,7 @@ class Api
      * @param array $params
      * @return string
      */
-    public function generateControlSum($method, $params = [])
+    protected function generateControlSum($method, $params = [])
     {
         $params['version'] = $this->version;
         $params['action'] = $method;
@@ -332,7 +335,7 @@ class Api
      * @param $idPhone
      * @return mixed
      */
-    function delPhoneFromAddressBookById($idPhone)
+    public function delPhoneFromAddressBookById($idPhone)
     {
         return $this->call('delPhoneFromAddressBook', [
             'idPhone' => $idPhone
@@ -345,7 +348,7 @@ class Api
      * @param $idAddressBook
      * @return mixed
      */
-    function delPhonesFromAddressBookByAddressBookId($idAddressBook)
+    public function delPhonesFromAddressBookByAddressBookId($idAddressBook)
     {
         return $this->call('delPhoneFromAddressBook', [
             'idAddressBook' => $idAddressBook
@@ -373,7 +376,7 @@ class Api
      * @param $variables
      * @return mixed
      */
-    function editPhone($idPhone, $phone, $variables)
+    public function editPhone($idPhone, $phone, $variables)
     {
         return $this->call('editPhone', [
             'idPhone' => $idPhone,
@@ -394,7 +397,7 @@ class Api
      * @param null $offset
      * @return mixed
      */
-    function searchPhones($searchFields, $from = null, $offset = null)
+    public function searchPhones($searchFields, $from = null, $offset = null)
     {
         return $this->call('searchPhones', [
             'searchFields' => json_encode($searchFields),
@@ -411,7 +414,7 @@ class Api
      * @param $reason
      * @return mixed
      */
-    function addPhoneToExceptions($idPhone = null, $phone = null, $reason)
+    public function addPhoneToExceptions($idPhone = null, $phone = null, $reason)
     {
         return $this->call('addPhoneToExceptions', [
             'isPhone' => $idPhone,
@@ -429,7 +432,7 @@ class Api
      * @param null $idException
      * @return mixed
      */
-    function delPhoneFromExceptions($idPhone = null, $phone = null, $idException = null)
+    public function delPhoneFromExceptions($idPhone = null, $phone = null, $idException = null)
     {
         return $this->call('delPhoneFromExceptions', [
             'isPhone' => $idPhone,
@@ -445,7 +448,7 @@ class Api
      * @param $reason
      * @return mixed
      */
-    function editPhoneFromExceptions($idException, $reason)
+    public function editPhoneFromExceptions($idException, $reason)
     {
         return $this->call('editExceptions', [
             'idException' => $idException,
@@ -463,7 +466,7 @@ class Api
      * @param null $offset
      * @return mixed
      */
-    function getException($idException = null, $phone = null, $idAddressBook = null, $from = null, $offset = null)
+    public function getException($idException = null, $phone = null, $idAddressBook = null, $from = null, $offset = null)
     {
         return $this->call('getException', [
             'idException' => $idException,
@@ -501,7 +504,7 @@ class Api
      * @param null $currency
      * @return mixed
      */
-    function getUserBalance($currency = null)
+    public function getUserBalance($currency = null)
     {
         return $this->call('getUserBalance', [
             'currency' => $currency
@@ -520,7 +523,7 @@ class Api
      * @param null $aSender
      * @return mixed
      */
-    function sendSMS($sender, $text, $phone, $datetime = null, $smsLifetime = null, $type = null, $aSender = null)
+    public function sendSMS($sender, $text, $phone, $datetime = null, $smsLifetime = null, $type = null, $aSender = null)
     {
         return $this->call('sendSMS', [
             'sender' => $sender,
@@ -530,6 +533,197 @@ class Api
             'sms_lifetime' => $smsLifetime,
             'type' => $type,
             'asender' => $aSender,
+        ]);
+    }
+
+    /**
+     * Sending messages to a group of recipients
+     *
+     * @param $sender
+     * @param $text
+     * @param $phones
+     * @param $datetime
+     * @param $smsLifetime
+     * @param null $type
+     * @param null $aSender
+     * @return mixed
+     */
+    public function sendSMSGroup($sender, $text, $phones, $datetime, $smsLifetime, $type = null, $aSender = null)
+    {
+        return $this->call('sendsmsgroup', [
+            'sender' => $sender,
+            'text' => $text,
+            'phones' => $phones,
+            'datetime' => $datetime,
+            'sms_lifetime' => $smsLifetime,
+            'type' => $type,
+            'asender' => $aSender,
+        ]);
+    }
+
+    /**
+     * Register new sender name
+     * Return status:
+     * 0-moderation
+     * 1-registered
+     * 2-rejected
+     *
+     * @param $name
+     * @param $country
+     * @return mixed
+     */
+    public function registerSender($name, $country)
+    {
+        return $this->call('registerSender', ['name' => $name, 'country' => $country]);
+    }
+
+    /**
+     * Get Sender object by id.
+     * Return status:
+     * 0-moderation
+     * 1-registered
+     * 2-rejected
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getSenderStatusById($id)
+    {
+        return $this->call('getSenderStatus', ['idName' => $id]);
+    }
+
+    /**
+     * Get Sender object by name and country.
+     * Return status:
+     * 0-moderation
+     * 1-registered
+     * 2-rejected
+     *
+     * @param $name
+     * @param $country
+     * @return mixed
+     */
+    public function getSenderStatusByNameCountry($name, $country)
+    {
+        return $this->call('getSenderStatus', ['name' => $name, 'country' => $country]);
+    }
+
+    /**
+     * Get Sender objects.
+     * Return status:
+     * 0-moderation
+     * 1-registered
+     * 2-rejected
+     *
+     * @param null $from
+     * @param null $offset
+     * @return mixed
+     */
+    public function getSenderStatusAll($from = null, $offset = null)
+    {
+        return $this->call('getSenderStatus', ['from' => $from, 'offset' => $offset]);
+    }
+
+    /**
+     * Creating campaign
+     * $sender - sender. Up to 14 numbers for numeric senders, up to 11 for alphanumeric
+     * $text - sms text
+     * $listId - id of address book
+     * $datetime must be in GMT, PHP format Y-m-d H:i:s
+     *
+     * @param $sender
+     * @param $text
+     * @param $listId
+     * @param $datetime
+     * @param $batch
+     * @param $batchInterval
+     * @param $smsLifetime
+     * @param $controlPhone
+     * @return mixed
+     */
+    public function createCampaign($sender, $text, $listId, $datetime, $batch, $batchInterval, $smsLifetime, $controlPhone)
+    {
+        return $this->call('createCampaign', [
+            'sender' => $sender,
+            'text' => $text,
+            'list_id' => $listId,
+            'datetime' => $datetime,
+            'batch' => $batch,
+            'batchinterval' => $batchInterval,
+            'sms_lifetime' => $smsLifetime,
+            'control_phone' => $controlPhone
+        ]);
+    }
+
+    /**
+     * This function will return general information about campaign
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getCampaignInfo($id)
+    {
+        return $this->call('getCampaignInfo', ['id' => $id]);
+    }
+
+    /**
+     * This function returns complete list of phones of the task, including DLR
+     *
+     * @param $id
+     * @param null $dateFrom
+     * @return mixed
+     */
+    public function getCampaignDeliveryStats($id, $dateFrom = null)
+    {
+        return $this->call('getCampaignDeliveryStats', ['id' => $id, 'datefrom' => $dateFrom]);
+    }
+
+    /**
+     * Cancels campaign. Campaign must be in "Ready for sent" or "Scheduled" state
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function cancelCampaign($id)
+    {
+        return $this->call('cancelCampaign', ['id' => $id]);
+    }
+
+    /**
+     * Deletes campaign, any status
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function deleteCampaign($id)
+    {
+        return $this->call('deleteCampaign', ['id' => $id]);
+    }
+
+    /**
+     * Gets list of campaigns
+     *
+     * @return mixed
+     */
+    public function getCampaignList()
+    {
+        return $this->call('getCampaignList');
+    }
+
+    /**
+     * Calculates price of campaign sending
+     *
+     * @param $sender
+     * @param $text
+     * @param $listId
+     * @return mixed
+     */
+    public function checkCampaignPrice($sender, $text, $listId)
+    {
+        return $this->call('checkCampaignPrice', [
+            'sender' => $sender,
+            'text' => $text,
+            'list_id' => $listId
         ]);
     }
 }
