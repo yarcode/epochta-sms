@@ -1,5 +1,5 @@
 {
-  "name": "yarcode/epochtasms",
+  "name": "yarcode/epochta-sms",
   "description": "PHP class for working with epochtasms.ru api by YarCode Team",
   "type": "library",
   "keywords": [
@@ -8,7 +8,7 @@
     "api",
     "russian"
   ],
-  "homepage": "https://github.com/yarcode/epochtasms",
+  "homepage": "https://github.com/yarcode/epochta-sms",
   "license": "MIT",
   "authors": [
     {
